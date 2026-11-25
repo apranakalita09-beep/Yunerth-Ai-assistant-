@@ -1,0 +1,6 @@
+{
+  "name": "Yunerth",
+  "description": "Personal AI voice assistant powered by Gemini Live.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

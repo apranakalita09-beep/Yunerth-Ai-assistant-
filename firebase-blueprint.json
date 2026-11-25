@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "UserRoot": {
+      "title": "UserRoot",
+      "description": "Minimal owner anchor document for Yunerth Memory Core without exposing email or phone PII.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "createdAt", "updatedAt"]
+    },
+    "MemoryRecord": {
+      "title": "MemoryRecord",
+      "description": "Account-scoped persistent text memory entry for Yunerth Memory Core (image memories excluded).",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 600
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Identity",
+            "Preferences",
+            "Life",
+            "Active",
+            "Relationships",
+            "Milestones",
+            "Behaviors"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": ["Manual", "Voice", "Automatic"]
+        },
+        "importance": {
+          "type": "string",
+          "enum": ["standard", "important"]
+        },
+        "confirmationStatus": {
+          "type": "string",
+          "enum": ["manual", "voice", "auto_saved", "user_approved"]
+        },
+        "keywords": {
+          "type": "array",
+          "description": "Bounded lowercase keyword index tokens (max 16 items, 1-48 chars each)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "description",
+        "category",
+        "source",
+        "importance",
+        "confirmationStatus",
+        "keywords",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserRoot" },
+      "description": "Authenticated user root document anchoring private memory records."
+    },
+    "/users/{userId}/memories/{memoryId}": {
+      "schema": { "$ref": "#/entities/MemoryRecord" },
+      "description": "Persistent long-term memories owned strictly by userId."
+    }
+  }
+}

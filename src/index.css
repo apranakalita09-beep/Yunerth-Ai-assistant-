@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  color-scheme: dark;
+  --bg-canvas: #07090e;
+  --bg-surface: #0e131d;
+  --border-hairline: rgba(148, 163, 184, 0.14);
+  --accent-cyan: #38bdf8;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background-color: var(--bg-canvas);
+  font-family: var(--font-sans);
+}
+
+@keyframes orb-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1.045);
+    opacity: 0.96;
+  }
+}
+
+@keyframes orb-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-orb-breathe {
+  animation: orb-breathe 3.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.animate-orb-ring-spin {
+  animation: orb-ring-spin 18s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-orb-breathe,
+  .animate-orb-ring-spin {
+    animation: none;
+  }
+}
